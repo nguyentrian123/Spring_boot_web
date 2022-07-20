@@ -15,7 +15,7 @@ public class SearchDTO {
 	private Integer rentPriceFrom;
 	private String managerName;
 	private String managerPhone;
-	private Integer staff;
+	private Long staff;
 	private Integer floorArea;
 	private List<String> renttype;
 	private Integer rentAreaTo;
@@ -87,10 +87,10 @@ public class SearchDTO {
 	public void setManagerPhone(String managerPhone) {
 		this.managerPhone = managerPhone;
 	}
-	public Integer getStaff() {
+	public Long getStaff() {
 		return staff;
 	}
-	public void setStaff(Integer staff) {
+	public void setStaff(Long staff) {
 		this.staff = staff;
 	}
 	public Integer getFloorArea() {

@@ -18,6 +18,8 @@
 	<%--sweetalert--%>
 	<script type='text/javascript' src="assets/sweetalert2/sweetalert2.min.js"></script>
 	<link rel="stylesheet" href="assets/sweetalert2/sweetalert2.min.css">
+	
+	
 </head>
 <body class="no-skin">
 	<!-- header -->
@@ -63,25 +65,6 @@
 	<!-- page specific plugin scripts -->
 	<script src="assets/js/jquery-ui.min.js"></script>
 
-	<script type="text/javascript">
-        function showAlertBeforeDelete(callback) {
-            swal({
-                title: "Xác nhận xóa",
-                text: "Bạn có chắc chắn xóa những dòng đã chọn",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Xác nhận",
-                cancelButtonText: "Hủy bỏ",
-                confirmButtonClass: "btn btn-success",
-                cancelButtonClass: "btn btn-danger"
-            }).then(function (res) {
-                if(res.value){
-                    callback();
-                }else if(res.dismiss == 'cancel'){
-                    console.log('cancel');
-                }
-            });
-        }
-	</script>
+	
 </body>
 </html>

@@ -44,6 +44,10 @@
 						<div class="row">
 							<div class="col-xs-12">
 								
+								<c:if test="${not empty message}">
+									<div class="alert alert-${alert}">${message}</div>
+								</c:if> 
+								
 								<form:form  modelAttribute="model" role="form"  id="formSubmit" method="get" class="form-horizontal">
 								
 									<div class="form-group">
@@ -345,11 +349,11 @@
 				contentType : 'application/json',
 				data : JSON.stringify(data),
 				dataType : 'json',
-				success : function(result) {
-					window.location.href = "${editBuildingURL}?id="+resuld.id+"";
+				success : function(result) { // result là cái model trả ra nè 
+					window.location.href = "${editBuildingURL}?id="+result.id+"&message=insert_success";
 				},
 				error : function(error) {
-					window.location.href = "${listBuildingURL}";
+					window.location.href = "${listBuildingURL}?message=error_system";
 				}
 			});
 		}
@@ -361,11 +365,11 @@
 				contentType : 'application/json',
 				data : JSON.stringify(data),
 				dataType : 'json',
-				success : function(result) {
-					window.location.href = "${editBuildingURL}?id="+resuld.id+"";
+				success : function(result) { // result là cái model trả ra nè 
+					window.location.href = "${editBuildingURL}?id="+result.id+"&message=update_success";
 				},
 				error : function(error) {
-					window.location.href = "${listBuildingURL}";
+					window.location.href = "${listBuildingURL}?message=error_system";
 				}
 			});
 		}

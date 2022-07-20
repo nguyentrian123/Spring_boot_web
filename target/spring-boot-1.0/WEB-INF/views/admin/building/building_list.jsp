@@ -3,7 +3,9 @@
 
 <c:url var="searchURL" value="/admin/buildinglist" />
 <c:url var="addURL" value="/admin/buildingedit" />
-<c:url var="loadStaffAPI" value="/api/building" />
+<c:url var="buildingAPI" value="/api/building" />
+<c:url var="assignStaff" value="/api/building/assign" />
+
 
 <html>
 <head>
@@ -37,7 +39,13 @@
 					<div class="page-content">
 						<div class="row">
 							<div class="col-xs-12">
-								<!-- ô tìm kiếm  -->
+							
+								<c:if test="${not empty message}">
+									<div class="alert alert-${alert}">
+			  							${message}
+									</div>
+								</c:if>
+								
 								<div class="widget-box">
 									<div class="widget-header">
 										<h4 class="widget-title">Tìm Kiếm</h4>
@@ -246,7 +254,7 @@
 											</button>
 										</a>
 										
-										<button  type ="button" class="btn btn-white btn-info btn-bold" data-toggle="tooltip" title="Xóa tòa nhà">
+										<button  type ="button" onclick="showAlertBeforeDelete()" class="btn btn-white btn-info btn-bold" data-toggle="tooltip" title="Xóa tòa nhà">
 											<i class="fa fa-trash"  aria-hidden="true"></i>
 											
 										</button>
@@ -404,23 +412,14 @@
 								
 							  </tr>
 							</thead>
-							<tbody>
-							  <tr>
-								<td><input type="checkbox" value="1" id="checkbox" /></td>
-								<td style="text-align: center;">Nguyễn Văn A</td>
-								
-							  </tr>
-							  <tr>
-								<td><input type="checkbox" value="2"  id="checkbox"/></td>
-								<td style="text-align: center;">Nguyễn Văn B</td>
 							
-							  </tr>
-							  <tr>
-								<td><input type="checkbox" value="3"  id="checkbox"/></td>
-								<td style="text-align: center;">Nguyễn Văn C</td>
-								
-							  </tr>
+							<tbody>					
+								<!-- <tr>
+							  		<td class="text-center"><input type="checkbox" value='0'  id="checkbox_0" class="check-box-element"  /></td>
+							 		<td class="text-center">ABC </td>
+							  	</tr> -->	
 							</tbody>
+							
 						  </table>
 
 							<input type="hidden" id="buildingId" name="buildingId" value=""/>
@@ -440,16 +439,26 @@
 			  function assignmentBuilding(buildingId)
 			  {
 					openModalAssginmentBuilding();
+					loadStaff(buildingId);
 					$('#buildingId').val(buildingId);
 			  }
 
 			  function loadStaff(buildingId) {
 				  $.ajax({
 					 type: "GET",
-					 url: "${loadStaffAPI}/${buildingId}/staffs",
+					// url: "${loadStaffAPI}/"+buildingId+"/staffs",
+					 url: "${buildingAPI}/staffs/?buildingid="+buildingId+" ",
 					 dataType: "json",
 					  success : function(response) {
-                          console.log("success");
+						  var row = '';
+						  $.each(response.data, function (index,item) {
+							  row += '<tr>';
+							  row += '<td class="text-center"><input type="checkbox" value='+item.id+'  id="checkbox_'+item.id+'" class="check-box-element" '+item.checked+' /></td>';
+							  row += '<td class="text-center">'+item.fullName+' </td>';
+							  row += '</tr>';
+                          });
+
+						  $('#staffList tbody').html(row); // add html vào cái nơi mà mình chỉ định
                       },
                       error : function(response) {
                           console.log("fail");
@@ -462,6 +471,84 @@
 			  function openModalAssginmentBuilding(){
 					$('#assignmentBuildingModal').modal();
 			  }
+
+			  $('#btnAssignBuilding').click(function (e) {
+					e.preventDefault();
+					var data = {}; // khai bao data la chuoi json
+					data['buildingId'] = $('#buildingId').val();
+	
+	                var staffs = $('#staffList').find('tbody input[type=checkbox]:checked').map(function () {
+						return $(this).val(); // đứng tại checkbox lấy value của nó ra
+	                }).get(); // trả ra 1 mảng staff
+	
+					data['staffs'] = staffs;
+	
+					assignStaff(data);
+              });
+
+              function assignStaff(data) {
+                  $.ajax({
+                      url : '${assignStaff}',
+                      type : 'POST',
+                      contentType : 'application/json',
+                      data : JSON.stringify(data),
+                      dataType : 'json',
+                      success : function(response) {             
+                          window.location.href = "${searchURL}";
+                       
+                      },
+                      error : function(response) {
+                          console.log("failed");
+                          console.log(response);
+                      }
+                  });
+              }
+              
+            
+             
+              function showAlertBeforeDelete(callback) {
+                  swal({
+                      title: "Xác nhận xóa",
+                      text: "Bạn có chắc chắn xóa những dòng đã chọn",
+                      type: "warning",
+                      showCancelButton: true,
+                      confirmButtonText: "Xác nhận",
+                      cancelButtonText: "Hủy bỏ",
+                      confirmButtonClass: "btn btn-success",
+                      cancelButtonClass: "btn btn-danger"
+                  }).then(function (res) {
+                      if(res.value){
+                    		var ids = $('#buildingList').find(' tbody input[type=checkbox]:checked').map(function () {
+          			            return $(this).val();
+          			        }).get();
+          					deleteBuilding(ids);
+          					
+                      }else if(res.dismiss == 'cancel'){
+                          console.log('cancel');
+                      }
+                  });
+              }
+      
+            
+
+      		
+      		function deleteBuilding(data) {
+      	        $.ajax({
+      	            url: '${buildingAPI}',
+      	            type: 'DELETE',
+      	            contentType: 'application/json',
+      	            data: JSON.stringify(data),
+      	            success: function (result) {
+      	                window.location.href = "${searchURL}?message=delete_success";
+      	            },
+      	            error: function (error) {
+      	            	window.location.href = "${searchURL}?message=error_system";
+      	            }
+      	        });
+      	    }
+
+      			
+
 		  </script>	
 	
 </body>
