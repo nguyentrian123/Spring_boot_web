@@ -1,24 +1,18 @@
 package com.laptrinhjavaweb.repository.impl;
 
-import java.util.ArrayList;
+import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.lang.reflect.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.constraints.AssertTrue;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.request.SearchDTO;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.repository.BuildingRepositoryCustom;
-import com.laptrinhjavaweb.utils.MapUtils;
-import com.laptrinhjavaweb.utils.NumberUtils;
 import com.laptrinhjavaweb.utils.StringUtils;
 
 @Repository
@@ -42,18 +36,19 @@ public class BuildingRepositoryCustomIMPL  implements BuildingRepositoryCustom {
          
         javax.persistence.Query query = entityManager.createNativeQuery(finalQuery.toString(),BuildingEntity.class); // chuyển nó về kiểu BuildingEntity
      
-        List<BuildingEntity> entities =  query.getResultList();
+        List<BuildingEntity> entities =  query.getResultList(); // giải quyết bài toán chuyển đổi từ rerult ra
         return   entities;
 	}
 	
 	
 	private StringBuilder buildQueryCommon(SearchDTO searchDTO , StringBuilder sql)
 	{
-		// sdung java reflective duyet cac field in a class
+		// sdung java reflective lấy  cac field in a class
 		Field[] fields = searchDTO.getClass().getDeclaredFields();
 		
 		 for (Field field : fields)
 		 {
+			
 			 field.setAccessible(true);
 			 try {
 				
@@ -61,18 +56,22 @@ public class BuildingRepositoryCustomIMPL  implements BuildingRepositoryCustom {
 						 &&!field.getName().toLowerCase().startsWith("rentprice") && !field.getName().toLowerCase().startsWith("rentarea")
 						 && !field.getName().equals("district"))
 				 {
-					 String value = (String) field.get(searchDTO);
-					 
-					 if(NumberUtils.isInteger(value))
+					 if(field.get(searchDTO) != null)
 					 {
-						 sql.append("\nAND b."+field.getName() +" = ")
-						 .append(value);
-					 }
-					 else if(!StringUtils.isNull(value)) {
-						 sql.append("\nAND b."+field.getName().toLowerCase()+" LIKE '%")
-						 .append(value+"%'");
-					 }
+						 String value =   String.valueOf(field.get(searchDTO));
 					
+						 if(  field.getType().equals(String.class) && !StringUtils.isNull(value))
+						 {		
+							 sql.append("\nAND b."+field.getName().toLowerCase()+" LIKE '%")
+							 .append(value+"%'");
+							 
+						 }
+						 else if(!StringUtils.isNull(value)) {	
+							 sql.append("\nAND b."+field.getName() +" = ")
+							 .append(value);
+						 }
+					 }
+				
 				 }
 				
 			} catch (Exception e) {

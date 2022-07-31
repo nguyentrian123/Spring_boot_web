@@ -24,13 +24,13 @@ public class BuildingEntity extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
     private String name;
     
-    @Column(name = "street")
+    @Column(name = "street" , nullable = false)
     private String street;
     
-    @Column(name = "ward")
+    @Column(name = "ward", nullable = false)
     private String ward;
     
     @OneToMany(mappedBy ="building",  cascade = CascadeType.ALL) 
@@ -43,7 +43,7 @@ public class BuildingEntity extends BaseEntity {
     private List<UserEntity> users = new ArrayList<>();
     
     
-    @Column(name = "districtcode")
+    @Column(name = "districtcode", nullable = false)
     private String districtCode;
     
     @Column(name = "type")

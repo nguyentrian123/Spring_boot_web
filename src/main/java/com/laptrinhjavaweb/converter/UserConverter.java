@@ -23,7 +23,7 @@ public class UserConverter {
         return result;
     }
     
-    public StaffResponseDTO convertToResponse(UserEntity entity)
+    public StaffResponseDTO convertToResponseChecked(UserEntity entity)
     {
     	StaffResponseDTO staff = new StaffResponseDTO();
     	staff.setFullName(entity.getFullName());

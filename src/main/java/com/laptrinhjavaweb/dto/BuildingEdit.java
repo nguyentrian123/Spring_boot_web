@@ -11,14 +11,6 @@ public class BuildingEdit extends AbstractDTO<BuildingEdit> {
 		private String name;
 	    
 	    private String rentArea;
-		
-	    public String getRentArea() {
-			return rentArea;
-		}
-
-		public void setRentArea(String rentArea) {
-			this.rentArea = rentArea;
-		}
 
 		private String street;
 	    
@@ -94,8 +86,15 @@ public class BuildingEdit extends AbstractDTO<BuildingEdit> {
 		private String map;
 		
 		private String image;
-
 		
+
+		  public String getRentArea() {
+				return rentArea;
+			}
+
+			public void setRentArea(String rentArea) {
+				this.rentArea = rentArea;
+			}
 		
 
 		public String getDistrictCode() {

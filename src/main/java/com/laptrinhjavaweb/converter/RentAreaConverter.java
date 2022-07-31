@@ -37,7 +37,7 @@ public class RentAreaConverter {
 	
 	public List<RentAreaEntity> convertToEntityDelete(BuildingEdit edit , BuildingEntity entity)
 	{
-		List<String> values = Arrays.asList(edit.getRentArea().split(",")); // tasch chuỗi thành list
+		List<String> values = Arrays.asList(edit.getRentArea().split(",")); // đưa chuỗi về list
 		List<RentAreaEntity> results = new ArrayList<>();
 		List<RentAreaEntity> rentAreaEntitys = rentAreaRepository.findByBuildingId(entity.getId());
 		

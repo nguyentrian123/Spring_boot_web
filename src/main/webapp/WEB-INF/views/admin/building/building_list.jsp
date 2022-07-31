@@ -34,7 +34,7 @@
 
 					
 					</div>
-				<form:form  modelAttribute="modelSearch" id="formSubmit" method="get">
+				<form:form  modelAttribute="modelSearch" id="formSubmit" method="post">
 				
 					<div class="page-content">
 						<div class="row">
@@ -226,8 +226,12 @@
 													</div>
 
 													<div class="form-group">
+														
 														<div class="col-sm-1">
-															<button id="searchBuilding" type="submit" class="btn btn-success" data-loading-text="Loading...">Tìm kiếm</button>
+															<button id="searchBuilding" type="submit" class="btn btn-success btn-md dropdown-toggle">
+																	Tìm kiếm
+																<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+															</button>
 														</div>
 													</div>
 														
@@ -338,9 +342,14 @@
 																		</button>  
 																	</a>
 																	
+																	<button class="btn btn-xs btn-info" data-toggle="tooltip" title="Chi tiết khách hàng">
+																		<i class="normal-icon ace-icon fa fa-eye white bigger-130"></i>
+																	</button>
+																	
 																	<a class="red" href="#">
 																		<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																	</a>
+																	
 																</div>
 
 																<div class="hidden-md hidden-lg">
@@ -422,7 +431,7 @@
 							
 						  </table>
 
-							<input type="hidden" id="buildingId" name="buildingId" value=""/>
+						  <input type="hidden" id="buildingId" name="buildingId" value=""/>
 
 					</div>
 					<div class="modal-footer">

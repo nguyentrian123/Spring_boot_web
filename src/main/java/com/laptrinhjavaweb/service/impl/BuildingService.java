@@ -90,8 +90,8 @@ public class BuildingService implements IBuildingService{
 	
 		if(buildingEdit.getId() != null)
 		{
-			Optional<BuildingEntity> optionalOldBuilding = buildingRepository.findById(buildingEdit.getId());
-			BuildingEntity oldBuilding = optionalOldBuilding.get();	
+			BuildingEntity oldBuilding = buildingRepository.findById(buildingEdit.getId()).get();
+			
 			
 			buildingEntity = buildingConverter.convertToEntity(oldBuilding, buildingEdit);
 			buildingEntity.setUsers(oldBuilding.getUsers()); // gửi lại các nv đang quản lý tòa nhà đó
@@ -123,8 +123,8 @@ public class BuildingService implements IBuildingService{
 	@Transactional
 	public void assignmentBuilding(BuildingAssignmentRequest bRequest) {
 		List<UserEntity> userEntities = userRepository.findByStatusAndRoles_CodeAndBuildings_Id(1, "USER", bRequest.getBuildingId());
-		Optional<BuildingEntity> optionalBuildingEntity = buildingRepository.findById(bRequest.getBuildingId());
-		BuildingEntity buildingEntity = optionalBuildingEntity.get();
+		BuildingEntity buildingEntity = buildingRepository.findById(bRequest.getBuildingId()).get();
+		
 		List<BuildingEntity> buildingEntities = new ArrayList<>();
 		
 		
@@ -160,6 +160,7 @@ public class BuildingService implements IBuildingService{
 		// ds trả ra mà không có trong staffs gửi về thì remove
 		for(UserEntity iUserEntity : userEntities)
 		{
+			
 			int countStaff = 0 ;
 			for(Long iLong : bRequest.getStaffs())
 			{
@@ -232,13 +233,11 @@ public class BuildingService implements IBuildingService{
 	
 
 	@Override
-	public void deleteBuilding(Long[] ids) {
-	
-		
+	public void deleteBuilding(Long[] ids) {	
 		
 		for (Long i : ids) {
 			buildingRepository.deleteById(i);
-			//rentAreaRepository.de
+			
 		}
 	}
 

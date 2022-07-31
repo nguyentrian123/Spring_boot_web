@@ -19,7 +19,7 @@ import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.service.IUserService;
 import com.laptrinhjavaweb.utils.MessageUtils;
 
-@Controller(value="buildingControllerOfWeb")
+@Controller(value="buildingControllerOfAdmin")
 public class BuildingController {
 
 	@Autowired
@@ -38,7 +38,7 @@ public class BuildingController {
 		ModelAndView mav = new ModelAndView("admin/building/building_list");
 		
 		buildingDTO.setListResult(buildingService.findBuilding(searchDTO));
-	
+
 		mav.addObject("model", buildingDTO);
 		mav.addObject("staffmaps", userService.getUserMaps());
 		mav.addObject("districtmaps", buildingService.getDistricts());
@@ -51,8 +51,9 @@ public class BuildingController {
 	
 
 	@RequestMapping(value = "/admin/buildingedit", method = RequestMethod.GET)
-	public ModelAndView editBuilding(@RequestParam(value = "id", required = false) Long id, HttpServletRequest request
-			) { // vì 1 giao dien cho 2 form, id luc co luc ko nen ta de required = false
+	public ModelAndView editBuilding(@RequestParam(value = "id", required = false) Long id, 
+									HttpServletRequest request) { // vì 1 giao dien cho 2 form, id luc co luc ko nen ta de required = false
+		
 		ModelAndView mav = new ModelAndView("admin/building/building_edit");
 		BuildingEdit model = new BuildingEdit();
 		
@@ -65,6 +66,12 @@ public class BuildingController {
 		if(request.getParameter("message")!= null)
 		{
 			Map<String, String> message = messageUtils.getMessage(request.getParameter("message"));
+			
+			// ném lỗi custom ra 
+			/*Map<String, String> message  = new HashMap<>();
+			message.put("alert", "danger");
+			message.put("message", request.getParameter("message"));*/
+			
 			mav.addObject("message", message.get("message"));
 			mav.addObject("alert", message.get("alert"));
 		}

@@ -353,7 +353,8 @@
 					window.location.href = "${editBuildingURL}?id="+result.id+"&message=insert_success";
 				},
 				error : function(error) {
-					window.location.href = "${listBuildingURL}?message=error_system";
+					//window.location.href = "${editBuildingURL}?message="+error.responseJSON.detail+" ";
+					window.location.href = "${editBuildingURL}?message=error_system";
 				}
 			});
 		}
@@ -369,7 +370,7 @@
 					window.location.href = "${editBuildingURL}?id="+result.id+"&message=update_success";
 				},
 				error : function(error) {
-					window.location.href = "${listBuildingURL}?message=error_system";
+					window.location.href = "${editBuildingURL}?message=error_system";
 				}
 			});
 		}

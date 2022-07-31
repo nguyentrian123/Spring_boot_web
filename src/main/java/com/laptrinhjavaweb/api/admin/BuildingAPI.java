@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.laptrinhjavaweb.dto.request.BuildingAssignmentRequest;
 import com.laptrinhjavaweb.dto.BuildingEdit;
 import com.laptrinhjavaweb.dto.response.ResponseDTO;
+import com.laptrinhjavaweb.exception.FieldNotFoundException;
 import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.service.IUserService;
+import com.laptrinhjavaweb.utils.VaidationUtils;
 
 @RestController(value="buildingAPIOfAdmin")
 @RequestMapping("/api/building")
@@ -29,7 +31,15 @@ public class BuildingAPI {
 	@PostMapping
 	public BuildingEdit createBuilding(@RequestBody BuildingEdit buildingEdit)
 	{
-		return buildingService.saveBuilding(buildingEdit);
+		try {
+			//validation
+			VaidationUtils.Validate(buildingEdit);
+			return buildingService.saveBuilding(buildingEdit);
+		} catch (FieldNotFoundException e) {
+
+			throw e; // ném ra sẽ tự động tìm tới controller advice 
+		}
+		
 		
 	}
 	
@@ -42,7 +52,7 @@ public class BuildingAPI {
 	
 	
 	//@GetMapping("/{buildingid}/staffs") // kh nên sdung cái này vì kh biết id của thằng nào
-	@GetMapping("/staffs") // dont nest resource  ,TH này ta vừa findbyId vừa FindAll được luôn, nhưng vì là web nên ta đưa findAll sang controller
+	@GetMapping("/staffs") // dont nest resource  ,TH này ta vừa findbyId vừa FindAll được luôn
 	public ResponseDTO loadStaff( @RequestParam(value = "buildingid", required = false) long id)
 	{
 		ResponseDTO result = new ResponseDTO();

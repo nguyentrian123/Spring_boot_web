@@ -178,21 +178,21 @@ public class UserService implements IUserService {
 		for(UserEntity item : staffs)
 		{	
 			
-			staffResponseDTOs.add(userConverter.convertToResponse(item));
+			staffResponseDTOs.add(userConverter.convertToResponseChecked(item));
 		}
 		
-		for(UserEntity iEntity : staffEntitys)
+		for(UserEntity uEntity : staffEntitys)
 		{
 			int count = 0;
 			for(StaffResponseDTO item : staffResponseDTOs)
 			{
-				if(iEntity.getId() == item.getId())
+				if(uEntity.getId() == item.getId())
 				{
 					count ++ ;
 				}
 			}
 			if(count == 0) {
-				staffResponseDTOs.add(userConverter.convertToResponseNotChecked(iEntity));
+				staffResponseDTOs.add(userConverter.convertToResponseNotChecked(uEntity));
 			}
 		}
 		

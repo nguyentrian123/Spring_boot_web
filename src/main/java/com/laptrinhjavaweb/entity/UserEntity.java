@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.entity;
+ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -34,6 +34,8 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private List<BuildingEntity> buildings = new ArrayList<>();
     
+    @ManyToMany(mappedBy="users", fetch = FetchType.LAZY)
+    private List<CustomerEntity> customers = new ArrayList<>();
     
 
     public List<BuildingEntity> getBuildings() {
