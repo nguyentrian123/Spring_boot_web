@@ -11,24 +11,22 @@ import org.springframework.stereotype.Service;
 import com.laptrinhjavaweb.converter.CustomerConverter;
 import com.laptrinhjavaweb.converter.TransactionConverter;
 import com.laptrinhjavaweb.dto.CustomerDTO;
-import com.laptrinhjavaweb.dto.TransactionDTO;
 import com.laptrinhjavaweb.entity.CustomerEntity;
-import com.laptrinhjavaweb.entity.TransactionEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.TransactionTypeEnum;
 import com.laptrinhjavaweb.repository.CustomerRepository;
-import com.laptrinhjavaweb.repository.CustomerRepositoryCustom;
 import com.laptrinhjavaweb.repository.TransactionRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
+import com.laptrinhjavaweb.repository.custom.CustomerRepositoryCustom;
 import com.laptrinhjavaweb.service.ICustomerService;
 
 @Service
 public class CustomerService implements ICustomerService{
 	
 	@Autowired
-	CustomerRepositoryCustom customerRepositoryCustom;
-	@Autowired
 	CustomerRepository customerRepository;
+	@Autowired
+	CustomerRepositoryCustom customerRepositoryCustom;
 	@Autowired
 	TransactionRepository transactionRepository;
 	@Autowired

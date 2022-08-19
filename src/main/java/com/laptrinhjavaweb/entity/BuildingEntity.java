@@ -65,28 +65,28 @@ public class BuildingEntity extends BaseEntity {
     private String level;
     
     @Column(name="rentprice")
-	private Integer rentprice;
+	private Integer rentPrice;
 	
 	@Column(name="rentpricedescription")
-	private String rentpricedescription;
+	private String rentPriceDescription;
 	
 	@Column(name="servicefee")
-	private String servicefee;
+	private String serviceFee;
 	
 	@Column(name="carfee")
-	private String carfee;
+	private String carFee;
 	
 	@Column(name="motorbikefee")
-	private String motorbikefee;
+	private String motorbikeFee;
 	
 	@Column(name="overtimefee")
-	private String overtimefee;
+	private String overtimeFee;
 	
 	@Column(name="waterfee")
-	private String waterfee;
+	private String waterFee;
 	
 	@Column(name="electricityfee")
-	private String electricityfee;
+	private String electricityFee;
 	
 	@Column(name="deposit")
 	private String deposit;
@@ -98,7 +98,7 @@ public class BuildingEntity extends BaseEntity {
 	private String renttime;
 	
 	@Column(name="decorationtime")
-	private String decorationtime;
+	private String decorationTime;
 	
 	@Column(name="managername")
 	private String managerName;
@@ -107,13 +107,13 @@ public class BuildingEntity extends BaseEntity {
 	private String managerPhone;
 	
 	@Column(name="brokeragefee")
-	private String brokeragefee;
+	private String brokerageFee;
 	
 	@Column(name="note")
 	private String note;
 	
 	@Column(name="linkofbuilding")
-	private String linkofbuilding;
+	private String linkOfBuilding;
 	
 	@Column(name="map")
 	private String map;
@@ -122,46 +122,13 @@ public class BuildingEntity extends BaseEntity {
 	private String image;
 	
 	
-    
 
-    public java.util.List<RentAreaEntity> getRentAreas() {
-		return rentAreas;
+	public String getName() {
+		return name;
 	}
 
-	public void setRentAreas(java.util.List<RentAreaEntity> rentAreas) {
-		this.rentAreas = rentAreas;
-	}
-
-	public List<UserEntity> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<UserEntity> users) {
-		this.users = users;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getManagerName() {
-		return managerName;
-	}
-
-	public void setManagerName(String managerName) {
-		this.managerName = managerName;
-	}
-
-	public String getManagerPhone() {
-		return managerPhone;
-	}
-
-	public void setManagerPhone(String managerPhone) {
-		this.managerPhone = managerPhone;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getStreet() {
@@ -180,6 +147,22 @@ public class BuildingEntity extends BaseEntity {
 		this.ward = ward;
 	}
 
+	public java.util.List<RentAreaEntity> getRentAreas() {
+		return rentAreas;
+	}
+
+	public void setRentAreas(java.util.List<RentAreaEntity> rentAreas) {
+		this.rentAreas = rentAreas;
+	}
+
+	public List<UserEntity> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
+	}
+
 	public String getDistrictCode() {
 		return districtCode;
 	}
@@ -188,12 +171,28 @@ public class BuildingEntity extends BaseEntity {
 		this.districtCode = districtCode;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public String getStructure() {
 		return structure;
 	}
 
 	public void setStructure(String structure) {
 		this.structure = structure;
+	}
+
+	public Integer getNumberOfBasement() {
+		return numberOfBasement;
+	}
+
+	public void setNumberOfBasement(Integer numberOfBasement) {
+		this.numberOfBasement = numberOfBasement;
 	}
 
 	public Integer getFloorArea() {
@@ -220,68 +219,68 @@ public class BuildingEntity extends BaseEntity {
 		this.level = level;
 	}
 
-	public Integer getRentprice() {
-		return rentprice;
+	public Integer getRentPrice() {
+		return rentPrice;
 	}
 
-	public void setRentprice(Integer rentprice) {
-		this.rentprice = rentprice;
+	public void setRentPrice(Integer rentPrice) {
+		this.rentPrice = rentPrice;
 	}
 
-	public String getRentpricedescription() {
-		return rentpricedescription;
+	public String getRentPriceDescription() {
+		return rentPriceDescription;
 	}
 
-	public void setRentpricedescription(String rentpricedescription) {
-		this.rentpricedescription = rentpricedescription;
+	public void setRentPriceDescription(String rentPriceDescription) {
+		this.rentPriceDescription = rentPriceDescription;
 	}
 
-	public String getServicefee() {
-		return servicefee;
+	public String getServiceFee() {
+		return serviceFee;
 	}
 
-	public void setServicefee(String servicefee) {
-		this.servicefee = servicefee;
+	public void setServiceFee(String serviceFee) {
+		this.serviceFee = serviceFee;
 	}
 
-	public String getCarfee() {
-		return carfee;
+	public String getCarFee() {
+		return carFee;
 	}
 
-	public void setCarfee(String carfee) {
-		this.carfee = carfee;
+	public void setCarFee(String carFee) {
+		this.carFee = carFee;
 	}
 
-	public String getMotorbikefee() {
-		return motorbikefee;
+	public String getMotorbikeFee() {
+		return motorbikeFee;
 	}
 
-	public void setMotorbikefee(String motorbikefee) {
-		this.motorbikefee = motorbikefee;
+	public void setMotorbikeFee(String motorbikeFee) {
+		this.motorbikeFee = motorbikeFee;
 	}
 
-	public String getOvertimefee() {
-		return overtimefee;
+	public String getOvertimeFee() {
+		return overtimeFee;
 	}
 
-	public void setOvertimefee(String overtimefee) {
-		this.overtimefee = overtimefee;
+	public void setOvertimeFee(String overtimeFee) {
+		this.overtimeFee = overtimeFee;
 	}
 
-	public String getWaterfee() {
-		return waterfee;
+	public String getWaterFee() {
+		return waterFee;
 	}
 
-	public void setWaterfee(String waterfee) {
-		this.waterfee = waterfee;
+	public void setWaterFee(String waterFee) {
+		this.waterFee = waterFee;
 	}
 
-	public String getElectricityfee() {
-		return electricityfee;
+	public String getElectricityFee() {
+		return electricityFee;
 	}
 
-	public void setElectricityfee(String electricityfee) {
-		this.electricityfee = electricityfee;
+	public void setElectricityFee(String electricityFee) {
+		this.electricityFee = electricityFee;
 	}
 
 	public String getDeposit() {
@@ -308,20 +307,36 @@ public class BuildingEntity extends BaseEntity {
 		this.renttime = renttime;
 	}
 
-	public String getDecorationtime() {
-		return decorationtime;
+	public String getDecorationTime() {
+		return decorationTime;
 	}
 
-	public void setDecorationtime(String decorationtime) {
-		this.decorationtime = decorationtime;
+	public void setDecorationTime(String decorationTime) {
+		this.decorationTime = decorationTime;
 	}
 
-	public String getBrokeragefee() {
-		return brokeragefee;
+	public String getManagerName() {
+		return managerName;
 	}
 
-	public void setBrokeragefee(String brokeragefee) {
-		this.brokeragefee = brokeragefee;
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getManagerPhone() {
+		return managerPhone;
+	}
+
+	public void setManagerPhone(String managerPhone) {
+		this.managerPhone = managerPhone;
+	}
+
+	public String getBrokerageFee() {
+		return brokerageFee;
+	}
+
+	public void setBrokerageFee(String brokerageFee) {
+		this.brokerageFee = brokerageFee;
 	}
 
 	public String getNote() {
@@ -332,12 +347,12 @@ public class BuildingEntity extends BaseEntity {
 		this.note = note;
 	}
 
-	public String getLinkofbuilding() {
-		return linkofbuilding;
+	public String getLinkOfBuilding() {
+		return linkOfBuilding;
 	}
 
-	public void setLinkofbuilding(String linkofbuilding) {
-		this.linkofbuilding = linkofbuilding;
+	public void setLinkOfBuilding(String linkOfBuilding) {
+		this.linkOfBuilding = linkOfBuilding;
 	}
 
 	public String getMap() {
@@ -355,20 +370,9 @@ public class BuildingEntity extends BaseEntity {
 	public void setImage(String image) {
 		this.image = image;
 	}
-
-	public String getName() {
-        return name;
-    }
+	
+	
     
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public Integer getNumberOfBasement() {
-        return numberOfBasement;
-    }
-
-    public void setNumberOfBasement(Integer numberOfBasement) {
-        this.numberOfBasement = numberOfBasement;
-    }
+    
 }

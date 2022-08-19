@@ -258,10 +258,15 @@
 											</button>
 										</a>
 										
-										<button  type ="button" onclick="showAlertBeforeDelete()" class="btn btn-white btn-info btn-bold" data-toggle="tooltip" title="Xóa tòa nhà">
-											<i class="fa fa-trash"  aria-hidden="true"></i>
-											
-										</button>
+										
+										<button id="btnDelete" type="button" disabled
+                                                    class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
+                                                    data-toggle="tooltip"
+                                                    title="Xóa bài viết" onclick="showAlertBeforeDelete()">
+															<span>
+																<i class="fa fa-trash-o bigger-110 pink"></i>
+															</span>
+                                        </button>
 	
 									</div>
 								</div>
@@ -313,13 +318,13 @@
 															</td>
 															<td>${item.name}</td>
 															<td>${item.address}</td>
-															<td>$45</td>
-															<td>$45</td>
-															<td>$45</td>
-															<td>$45</td>
-															<td >3,330</td>
-															<td>Feb 12</td>
-
+															<td>${item.managerName}</td>
+															<td>${item.managerPhone }</td>
+															<td>${item.floorArea }</td>
+															<td>${item.rentArea }</td>
+															<td>${item.rentPrice }</td>
+															<td >${item.serviceFee}</td>
+														
 															<td >
 																<span>Expiring</span>
 															</td>
@@ -346,9 +351,7 @@
 																		<i class="normal-icon ace-icon fa fa-eye white bigger-130"></i>
 																	</button>
 																	
-																	<a class="red" href="#">
-																		<i class="ace-icon fa fa-trash-o bigger-130"></i>
-																	</a>
+																
 																	
 																</div>
 
@@ -375,13 +378,7 @@
 																				</a>
 																			</li>
 
-																			<li>
-																				<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																					<span class="red">
-																						<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																					</span>
-																				</a>
-																			</li>
+																			
 																		</ul>
 																	</div>
 																</div>
@@ -390,7 +387,7 @@
 													</c:forEach>
 												</tbody>
 											</table>
-
+											
 										</div>
 									</div>
 								</div>
@@ -527,6 +524,7 @@
                       cancelButtonClass: "btn btn-danger"
                   }).then(function (res) {
                       if(res.value){
+                    	 	event.preventDefault();
                     		var ids = $('#buildingList').find(' tbody input[type=checkbox]:checked').map(function () {
           			            return $(this).val();
           			        }).get();
@@ -538,13 +536,13 @@
                   });
               }
       
-            
 
       		
       		function deleteBuilding(data) {
       	        $.ajax({
       	            url: '${buildingAPI}',
       	            type: 'DELETE',
+      	         	dataType: 'json',
       	            contentType: 'application/json',
       	            data: JSON.stringify(data),
       	            success: function (result) {

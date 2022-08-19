@@ -3,13 +3,13 @@ package com.laptrinhjavaweb.converter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.BuildingEdit;
 import com.laptrinhjavaweb.entity.BuildingEntity;
 import com.laptrinhjavaweb.entity.RentAreaEntity;
 import com.laptrinhjavaweb.repository.RentAreaRepository;
@@ -26,12 +26,7 @@ public class BuildingConverter {
 	@Autowired
 	private RentAreaRepository rentAreaRepository;
 	
-	// convert cho tìm kiếm tòa nhà 
-	public BuildingDTO convertToDTO(BuildingEntity buildingEntity) {
-		BuildingDTO dto = modelMapper.map(buildingEntity, BuildingDTO.class);
-		dto.setAddress(dto.getStreet() +", "+ dto.getWard() +", "+dto.getDistrict());
-		return dto;
-	}
+	
 	
 	// covert cho chi tiết tòa nhà
 	public BuildingDTO convertToResponse(BuildingEntity item) {
@@ -40,61 +35,60 @@ public class BuildingConverter {
 	}
 	
 
-	public BuildingEdit convertToEdit(BuildingEntity item) {
-		BuildingEdit dto = modelMapper.map(item, BuildingEdit.class);
-		List<RentAreaEntity> rentAreaEntity = rentAreaRepository.findByBuildingId(item.getId());
-		List<String> aList = new ArrayList<>();	
+	public BuildingDTO convertToDTO(BuildingEntity buildingEntity) {
+		BuildingDTO dto = modelMapper.map(buildingEntity, BuildingDTO.class);
+		List<RentAreaEntity> rentAreaEntitys = rentAreaRepository.findByBuildingId(buildingEntity.getId());
 		
-		// chuyeern  1 cái mảng thành 1 arraylist
-		if(item.getType() != null )
+		if(buildingEntity.getType() != null )
 		{
-			dto.setType(Arrays.asList(item.getType().split(","))); // đưa xuống thì ta cần 1 cái chuỗi, nhưng lấy lên thì cần tách ra 1 cái list
-		}
-			
-		for(RentAreaEntity r : rentAreaEntity)
-		{
-			String s = String.valueOf(r.getValue());
-			aList.add(s);
-		}
-		String emptyArea  = String.join(",", aList);
-		dto.setRentArea(emptyArea); // set hiển thị rentare theo định dạng value,value,
+			dto.setType(Arrays.asList(buildingEntity.getType().split(","))); // đưa xuống thì ta cần 1 cái chuỗi, nhưng lấy lên thì cần tách ra 1 cái list
+		}	
+		String emptyArea =  rentAreaEntitys.stream().map(entity -> String.valueOf(entity.getValue())).collect(Collectors.joining(","));
+		dto.setRentArea(emptyArea); //  hiển thị rentare theo định dạng value,value,
 		
 		return dto;
 	}
-	
-	// toEntityWithDTO
-	public BuildingEntity convertToEntity(BuildingDTO newBuilding) {
-		BuildingEntity entity = modelMapper.map(newBuilding, BuildingEntity.class);
-		return entity;
-	}
+
 	
 	// toEntityWithEditWhenSave
-	public BuildingEntity convertToEntity(BuildingEdit newBuilding) {
+	public BuildingEntity convertToEntity(BuildingDTO newBuilding) {
 	
 		
-		BuildingEntity entity = modelMapper.map(newBuilding, BuildingEntity.class);
+		BuildingEntity buildingEntity = modelMapper.map(newBuilding, BuildingEntity.class);
+		List<String> values = Arrays.asList(newBuilding.getRentArea().split(","));
+		List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
+		
+		for(String item : values){
+			RentAreaEntity rentAreaEntity = new RentAreaEntity();
+			rentAreaEntity.setBuilding(buildingEntity);
+			rentAreaEntity.setValue(Integer.parseInt(item));
+			rentAreaEntities.add(rentAreaEntity);
+		}
+		
+		buildingEntity.setRentAreas(rentAreaEntities);
+		
 		if(newBuilding.getType() != null) {
 			String  type  = String.join(",", newBuilding.getType());
-			entity.setType(type);
+			buildingEntity.setType(type);
 		}
 		
-		
-		return entity;
+		return buildingEntity;
 	}
 	
+	
 	// toEntityWithEditWhenUpdate
-	public BuildingEntity convertToEntity(BuildingEntity result, BuildingEdit edit)
+	public BuildingEntity convertToEntity(BuildingEntity result, BuildingDTO buildingDTO)
 	{
-		
-		
-		result = modelMapper.map(edit, BuildingEntity.class);
-		if(edit.getType() != null)
+		result = modelMapper.map(buildingDTO, BuildingEntity.class);	
+		rentAreaRepository.deleteAll(rentAreaConverter.convertToEntityDelete( result , buildingDTO));
+		List<RentAreaEntity> rentAreaEntities = rentAreaConverter.convertToEntityUpdate( result , buildingDTO); 
+		result.setRentAreas(rentAreaEntities); // không có cascade = CascadeType.ALL thì k save được 
+		 
+		if(buildingDTO.getType() != null)
 		{
-			String  type  = String.join(",", edit.getType());
+			String  type  = String.join(",", buildingDTO.getType());
 			result.setType(type);
 		}
-		
-	
 		
 		return result;
 	}

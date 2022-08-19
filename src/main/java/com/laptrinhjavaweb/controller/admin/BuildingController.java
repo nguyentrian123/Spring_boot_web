@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.laptrinhjavaweb.dto.BuildingDTO;
-import com.laptrinhjavaweb.dto.BuildingEdit;
 import com.laptrinhjavaweb.dto.request.SearchDTO;
 import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.service.IUserService;
@@ -55,7 +54,7 @@ public class BuildingController {
 									HttpServletRequest request) { // vì 1 giao dien cho 2 form, id luc co luc ko nen ta de required = false
 		
 		ModelAndView mav = new ModelAndView("admin/building/building_edit");
-		BuildingEdit model = new BuildingEdit();
+		BuildingDTO model = new BuildingDTO();
 		
 		if(id != null)
 		{

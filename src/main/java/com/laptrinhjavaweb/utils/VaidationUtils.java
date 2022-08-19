@@ -1,14 +1,14 @@
 package com.laptrinhjavaweb.utils;
 
-import com.laptrinhjavaweb.dto.BuildingEdit;
+import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.exception.FieldNotFoundException;
 
 public class VaidationUtils {
 	
-	public static void Validate(BuildingEdit buildingEdit) throws FieldNotFoundException
+	public static void Validate(BuildingDTO buildingDTO) throws FieldNotFoundException
 	{
 	
-		if( buildingEdit.getName() == null || buildingEdit.getName() == "")
+		if( buildingDTO.getName() == null || buildingDTO.getName() == "")
 		{
 			throw new FieldNotFoundException("Name is required");
 		}

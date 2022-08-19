@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.repository.impl;
+package com.laptrinhjavaweb.repository.custom.impl;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.request.SearchDTO;
 import com.laptrinhjavaweb.entity.BuildingEntity;
-import com.laptrinhjavaweb.repository.BuildingRepositoryCustom;
+import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 import com.laptrinhjavaweb.utils.StringUtils;
 
 @Repository
@@ -33,7 +33,7 @@ public class BuildingRepositoryCustomIMPL  implements BuildingRepositoryCustom {
 		finalQuery = buildQueryCommon(searchDTO,finalQuery);
 		finalQuery = buildQuerySpecial(searchDTO, finalQuery);		
         finalQuery.append("\nGROUP BY b.id");
-         
+        
         javax.persistence.Query query = entityManager.createNativeQuery(finalQuery.toString(),BuildingEntity.class); // chuyển nó về kiểu BuildingEntity
      
         List<BuildingEntity> entities =  query.getResultList(); // giải quyết bài toán chuyển đổi từ rerult ra

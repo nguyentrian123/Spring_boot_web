@@ -136,7 +136,7 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Giá thuê </label>
 										<div class="col-sm-9">
-											<form:input path="rentprice" class="form-control"/>
+											<form:input path="rentPrice" class="form-control"/>
 										</div>
 									</div>
 
@@ -144,91 +144,102 @@
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Mô tả giá </label>
 										<div class="col-sm-9">
 											
-											<form:textarea path="rentpricedescription" class="form-control" rows="3" required="required"></form:textarea>
+											<form:textarea path="rentPriceDescription" class="form-control" rows="3" required="required"></form:textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Phí dịch vụ </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="serviceFee" class="form-control"/>
+											
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Phí ô tô </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="carFee" class="form-control"/>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Phí mô tô </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="motorbikeFee" class="form-control"/>
+											
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Phí ngoài giờ </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="overtimeFee" class="form-control"/>
+											
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Tiền điện</label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="electricityFee" class="form-control"/>
+										
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Đặt cọc </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="deposit" class="form-control"/>
+											
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Thanh toán </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="payment" class="form-control"/>
+											
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Thời hạn thuê </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="renttime" class="form-control"/>
+											
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" >Thời gian trang trí </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="decorationTime" class="form-control"/>
+											
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" >Tên quản lý </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="managerName" class="form-control"/>
+											
 										</div>
 									</div>
 
-									<div class="form-group">
+									<div class="form-group">		
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" >Số điện thoại quản lý </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="managerPhone" class="form-control"/>
+											
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" >Phí môi giới </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="brokerageFee" class="form-control"/>
+											
 										</div>
 									</div>
 
@@ -247,22 +258,22 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" >Ghi chú </label>
 										<div class="col-sm-9">
-										
-											<textarea name="" id="input" class="form-control" rows="3" required="required"></textarea>
-											
+											<form:textarea path="note" class="form-control" rows="3" required="required"></form:textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" >Link sản phẩm</label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="linkOfBuilding" class="form-control"/>
+											
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" >Bản đồ </label>
 										<div class="col-sm-9">
+											<form:input path="map" class="form-control"/>
 											<input type="text" id="form-field-1" class="form-control" />
 										</div>
 									</div>

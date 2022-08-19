@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.repository;
+package com.laptrinhjavaweb.repository.custom;
 
 import java.util.List;
 

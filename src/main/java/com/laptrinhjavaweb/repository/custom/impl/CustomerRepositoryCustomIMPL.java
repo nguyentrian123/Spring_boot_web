@@ -1,4 +1,4 @@
-package com.laptrinhjavaweb.repository.impl;
+package com.laptrinhjavaweb.repository.custom.impl;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -12,7 +12,7 @@ import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.CustomerDTO;
 import com.laptrinhjavaweb.dto.request.SearchDTO;
 import com.laptrinhjavaweb.entity.CustomerEntity;
-import com.laptrinhjavaweb.repository.CustomerRepositoryCustom;
+import com.laptrinhjavaweb.repository.custom.CustomerRepositoryCustom;
 import com.laptrinhjavaweb.utils.StringUtils;
 
 @Repository

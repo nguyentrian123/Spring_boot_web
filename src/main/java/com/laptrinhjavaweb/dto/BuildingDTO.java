@@ -1,42 +1,59 @@
 package com.laptrinhjavaweb.dto;
 
+import java.util.List;
+
 public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	
 	private String name;
 	private String numberOfBasement;
-	private String buildingArea;
+	private String rentArea;
 	private String street;
 	private String ward;
-	private String district;
+	private List<String> type;
+	private String districtCode;
 	private String structure;
-	private Integer costRent;
-	private String costDescription;
-	private String serviceCost;
-	private String carCost;
-	private String motorbikeCost;
-	private String overtimeCost;
-	private String[] buildingTypes = new String[] {};
-	private String costRentFrom;
-	private String costRentTo;
-	private String areaRentFrom;
-	private String areaRentTo;
-	private String staffId;
-	private String electricityCost;
+    private Integer floorArea;
+    private String direction;
+    private String level;
+  	private Integer rentPrice;
+	private String rentPriceDescription;
+	private String serviceFee;
+	private String carFee;
+	private String motorbikeFee;
+	private String overtimeFee;
+	private String waterFee;
+	private String electricityFee;
 	private String deposit;
 	private String payment;
-	private String timeRent;
-	private String timeDecorator;
+	private String renttime;
+	private String decorationTime;
 	private String managerName;
 	private String managerPhone;
-	private String areaRent;
+	private String brokerageFee;
+	private String note;
+	private String linkOfBuilding;
+	private String map;
+	private String image;
 	private String address;
-	private String type;
+	
 	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getNumberOfBasement() {
+		return numberOfBasement;
+	}
+	public void setNumberOfBasement(String numberOfBasement) {
+		this.numberOfBasement = numberOfBasement;
+	}
+	public String getRentArea() {
+		return rentArea;
+	}
+	public void setRentArea(String rentArea) {
+		this.rentArea = rentArea;
 	}
 	public String getStreet() {
 		return street;
@@ -50,11 +67,17 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	public void setWard(String ward) {
 		this.ward = ward;
 	}
-	public String getDistrict() {
-		return district;
+	public List<String> getType() {
+		return type;
 	}
-	public void setDistrict(String district) {
-		this.district = district;
+	public void setType(List<String> type) {
+		this.type = type;
+	}
+	public String getDistrictCode() {
+		return districtCode;
+	}
+	public void setDistrictCode(String districtCode) {
+		this.districtCode = districtCode;
 	}
 	public String getStructure() {
 		return structure;
@@ -62,95 +85,71 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	public void setStructure(String structure) {
 		this.structure = structure;
 	}
-	public Integer getCostRent() {
-		return costRent;
+	public Integer getFloorArea() {
+		return floorArea;
 	}
-	public void setCostRent(Integer costRent) {
-		this.costRent = costRent;
+	public void setFloorArea(Integer floorArea) {
+		this.floorArea = floorArea;
 	}
-	public String getCostDescription() {
-		return costDescription;
+	public String getDirection() {
+		return direction;
 	}
-	public void setCostDescription(String costDescription) {
-		this.costDescription = costDescription;
+	public void setDirection(String direction) {
+		this.direction = direction;
 	}
-	public String getServiceCost() {
-		return serviceCost;
+	public String getLevel() {
+		return level;
 	}
-	public void setServiceCost(String serviceCost) {
-		this.serviceCost = serviceCost;
+	public void setLevel(String level) {
+		this.level = level;
 	}
-	public String getCarCost() {
-		return carCost;
+	public Integer getRentPrice() {
+		return rentPrice;
 	}
-	public void setCarCost(String carCost) {
-		this.carCost = carCost;
+	public void setRentPrice(Integer rentPrice) {
+		this.rentPrice = rentPrice;
 	}
-	public String getMotorbikeCost() {
-		return motorbikeCost;
+	public String getRentPriceDescription() {
+		return rentPriceDescription;
 	}
-	public void setMotorbikeCost(String motorbikeCost) {
-		this.motorbikeCost = motorbikeCost;
+	public void setRentPriceDescription(String rentPriceDescription) {
+		this.rentPriceDescription = rentPriceDescription;
 	}
-	public String getOvertimeCost() {
-		return overtimeCost;
+	public String getServiceFee() {
+		return serviceFee;
 	}
-	public void setOvertimeCost(String overtimeCost) {
-		this.overtimeCost = overtimeCost;
+	public void setServiceFee(String serviceFee) {
+		this.serviceFee = serviceFee;
 	}
-	public String getNumberOfBasement() {
-		return numberOfBasement;
+	public String getCarFee() {
+		return carFee;
 	}
-	public void setNumberOfBasement(String numberOfBasement) {
-		this.numberOfBasement = numberOfBasement;
+	public void setCarFee(String carFee) {
+		this.carFee = carFee;
 	}
-	public String getBuildingArea() {
-		return buildingArea;
+	public String getMotorbikeFee() {
+		return motorbikeFee;
 	}
-	public void setBuildingArea(String buildingArea) {
-		this.buildingArea = buildingArea;
+	public void setMotorbikeFee(String motorbikeFee) {
+		this.motorbikeFee = motorbikeFee;
 	}
-	public String[] getBuildingTypes() {
-		return buildingTypes;
+	public String getOvertimeFee() {
+		return overtimeFee;
 	}
-	public void setBuildingTypes(String[] buildingTypes) {
-		this.buildingTypes = buildingTypes;
+	public void setOvertimeFee(String overtimeFee) {
+		this.overtimeFee = overtimeFee;
 	}
-	public String getCostRentFrom() {
-		return costRentFrom;
+	public String getWaterFee() {
+		return waterFee;
 	}
-	public void setCostRentFrom(String costRentFrom) {
-		this.costRentFrom = costRentFrom;
+	public void setWaterFee(String waterFee) {
+		this.waterFee = waterFee;
 	}
-	public String getCostRentTo() {
-		return costRentTo;
+	public String getElectricityFee() {
+		return electricityFee;
 	}
-	public void setCostRentTo(String costRentTo) {
-		this.costRentTo = costRentTo;
-	}
-	public String getAreaRentFrom() {
-		return areaRentFrom;
-	}
-	public void setAreaRentFrom(String areaRentFrom) {
-		this.areaRentFrom = areaRentFrom;
-	}
-	public String getAreaRentTo() {
-		return areaRentTo;
-	}
-	public void setAreaRentTo(String areaRentTo) {
-		this.areaRentTo = areaRentTo;
-	}
-	public String getStaffId() {
-		return staffId;
-	}
-	public void setStaffId(String staffId) {
-		this.staffId = staffId;
-	}
-	public String getElectricityCost() {
-		return electricityCost;
-	}
-	public void setElectricityCost(String electricityCost) {
-		this.electricityCost = electricityCost;
+	public void setElectricityFee(String electricityFee) {
+		this.electricityFee = electricityFee;
 	}
 	public String getDeposit() {
 		return deposit;
@@ -164,17 +163,17 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	public void setPayment(String payment) {
 		this.payment = payment;
 	}
-	public String getTimeRent() {
-		return timeRent;
+	public String getRenttime() {
+		return renttime;
 	}
-	public void setTimeRent(String timeRent) {
-		this.timeRent = timeRent;
+	public void setRenttime(String renttime) {
+		this.renttime = renttime;
 	}
-	public String getTimeDecorator() {
-		return timeDecorator;
+	public String getDecorationTime() {
+		return decorationTime;
 	}
-	public void setTimeDecorator(String timeDecorator) {
-		this.timeDecorator = timeDecorator;
+	public void setDecorationTime(String decorationTime) {
+		this.decorationTime = decorationTime;
 	}
 	public String getManagerName() {
 		return managerName;
@@ -188,11 +187,35 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	public void setManagerPhone(String managerPhone) {
 		this.managerPhone = managerPhone;
 	}
-	public String getAreaRent() {
-		return areaRent;
+	public String getBrokerageFee() {
+		return brokerageFee;
 	}
-	public void setAreaRent(String areaRent) {
-		this.areaRent = areaRent;
+	public void setBrokerageFee(String brokerageFee) {
+		this.brokerageFee = brokerageFee;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
+	public String getLinkOfBuilding() {
+		return linkOfBuilding;
+	}
+	public void setLinkOfBuilding(String linkOfBuilding) {
+		this.linkOfBuilding = linkOfBuilding;
+	}
+	public String getMap() {
+		return map;
+	}
+	public void setMap(String map) {
+		this.map = map;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	public String getAddress() {
 		return address;
@@ -200,10 +223,9 @@ public class BuildingDTO extends AbstractDTO<BuildingDTO> {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
+	
+	
+	
+
+	
 }
