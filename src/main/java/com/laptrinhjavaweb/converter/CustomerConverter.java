@@ -18,4 +18,14 @@ public class CustomerConverter {
 		CustomerDTO customerDTO = modelMapper.map(customerEntity, CustomerDTO.class);
 		return customerDTO;
 	}
+	
+	public CustomerEntity convertToEntity( CustomerDTO customerDTO) {
+		CustomerEntity result = modelMapper.map(customerDTO, CustomerEntity.class);
+		return result;
+	}
+	
+	public CustomerEntity convertToEntity(CustomerEntity result , CustomerDTO customerDTO) {
+		result = modelMapper.map(customerDTO, CustomerEntity.class);
+		return result;
+	}
 }

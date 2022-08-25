@@ -47,6 +47,7 @@ public class CustomerController {
 		return mav;
 	}
 	
+	
 	@RequestMapping(value="/admin/customeredit")
 	public ModelAndView customerEdit(@RequestParam(value="id", required= false) Long id,
 									HttpServletRequest request)
@@ -74,4 +75,17 @@ public class CustomerController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value="/admin/transaction")
+	public ModelAndView addTransaction(HttpServletRequest request)
+	{
+		TransactionDTO model = new TransactionDTO();
+		ModelAndView mav = new ModelAndView("admin/customer/transaction");
+		mav.addObject("model", model);
+		mav.addObject("transactiontypemaps", customerService.getTransactionType());
+		
+		return mav;
+	}
+	
+	
 }

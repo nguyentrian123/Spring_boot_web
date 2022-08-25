@@ -8,7 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -30,6 +29,15 @@ public class CustomerEntity extends BaseEntity {
 	    @Column(name = "email", unique = true)
 	    private String email;
 	    
+	    @Column(name = "companyname")
+	    private String companyName;
+	    
+	    @Column(name = "need")
+	    private String need;
+	    
+	    @Column(name = "note")
+	    private String note;
+	    
 	    @OneToMany(mappedBy="customer",  cascade = CascadeType.ALL)
 	    private List<TransactionEntity> transactions = new ArrayList<>();
 	    
@@ -39,6 +47,32 @@ public class CustomerEntity extends BaseEntity {
 	    			inverseJoinColumns = @JoinColumn(name = "user_id" , nullable = false)
 	    		)
 	    private List<UserEntity> users = new ArrayList<>();
+	    
+	    
+
+		public String getCompanyName() {
+			return companyName;
+		}
+
+		public void setCompanyName(String companyName) {
+			this.companyName = companyName;
+		}
+
+		public String getNeed() {
+			return need;
+		}
+
+		public void setNeed(String need) {
+			this.need = need;
+		}
+
+		public String getNote() {
+			return note;
+		}
+
+		public void setNote(String note) {
+			this.note = note;
+		}
 
 		public String getFullName() {
 			return fullName;

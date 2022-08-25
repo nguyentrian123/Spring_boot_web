@@ -34,7 +34,7 @@
 
 					
 					</div>
-				<form:form  modelAttribute="modelSearch" id="formSubmit" method="post">
+				<form:form  modelAttribute="modelSearch" id="formSubmit" method="get">
 				
 					<div class="page-content">
 						<div class="row">

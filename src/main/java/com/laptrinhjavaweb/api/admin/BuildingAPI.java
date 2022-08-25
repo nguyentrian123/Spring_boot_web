@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.api.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,25 +30,21 @@ public class BuildingAPI {
 	private IUserService userService;
 	
 	@PostMapping
-	public BuildingDTO createBuilding(@RequestBody BuildingDTO buildingDTO)
+	public ResponseEntity<BuildingDTO> createBuilding(@RequestBody BuildingDTO buildingDTO)
 	{
 		try {
-			//validation
 			VaidationUtils.Validate(buildingDTO);
-			return buildingService.saveBuilding(buildingDTO);
+			return ResponseEntity.ok(buildingService.saveBuilding(buildingDTO));
 		} catch (FieldNotFoundException e) {
 
 			throw e; // ném ra sẽ tự động tìm tới controller advice 
 		}
-		
-		
 	}
 	
 	@PutMapping
-	public BuildingDTO updateBuilding(@RequestBody BuildingDTO buildingDTO)
+	public ResponseEntity<BuildingDTO> updateBuilding(@RequestBody BuildingDTO buildingDTO)
 	{
-		
-		return buildingService.saveBuilding(buildingDTO);
+		return ResponseEntity.ok(buildingService.saveBuilding(buildingDTO));
 	}
 	
 	
@@ -56,7 +53,7 @@ public class BuildingAPI {
 	public ResponseDTO loadStaff( @RequestParam(value = "buildingid", required = false) long id)
 	{
 		ResponseDTO result = new ResponseDTO();
-		result.setData(userService.findStaffAssgins(id));
+		result.setData(userService.findStaffAssginsBuilding(id));
 		result.setMessage("success");
 		return result;
 	}
@@ -71,9 +68,12 @@ public class BuildingAPI {
 	}
 	
 	@DeleteMapping
-	public void deleteBuilding(@RequestBody Long[] ids)
+	public  ResponseEntity<Void> deleteBuilding(@RequestBody Long[] ids)
 	{
-		buildingService.deleteBuilding(ids);
+		if(ids.length > 0) {
+			buildingService.deleteBuilding(ids);
+		}
+		return ResponseEntity.noContent().build();
 	}
 	
 	

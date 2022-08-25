@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.laptrinhjavaweb.converter.CustomerConverter;
 import com.laptrinhjavaweb.converter.TransactionConverter;
 import com.laptrinhjavaweb.dto.CustomerDTO;
+import com.laptrinhjavaweb.dto.request.CustomerAssignmentRequest;
 import com.laptrinhjavaweb.entity.CustomerEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.enums.TransactionTypeEnum;
@@ -53,7 +56,7 @@ public class CustomerService implements ICustomerService{
 		
 		for(CustomerEntity item : entities) {	
 			CustomerDTO customer = customerConverter.converToDTO(item);
-			List<UserEntity> userEntities = userRepository.findByCustomers_Id(item.getId());
+			List<UserEntity> userEntities = userRepository.findByStatusAndRoles_CodeAndCustomers_Id(1, "USER", item.getId());
 			List<String> nameStaffs = new ArrayList<>();
 			
 			for(UserEntity entity : userEntities) {
@@ -74,6 +77,54 @@ public class CustomerService implements ICustomerService{
 
 		return customerDTO;
 	}
+	
+	@Override
+	@Transactional
+	public CustomerDTO save(CustomerDTO customerDTO) {
+		CustomerEntity customerEntity = new CustomerEntity();
+		
+		if(customerDTO.getId() != null) {
+			CustomerEntity oldCustomer = customerRepository.findById(customerDTO.getId()).get();
+			customerEntity = customerConverter.convertToEntity(oldCustomer , customerDTO);
+			customerEntity.setUsers(oldCustomer.getUsers());
+			customerEntity.setTransactions(oldCustomer.getTransactions());
+		}
+		else {
+			customerEntity = customerConverter.convertToEntity(customerDTO);
+		}
+		return customerConverter.converToDTO(customerRepository.save(customerEntity));
+	}
+	
+
+	@Override
+	@Transactional
+	public void assignmentCustomer(CustomerAssignmentRequest customerAssignmentRequest) {
+		List<UserEntity> userEntities = userRepository.findByStatusAndRoles_CodeAndCustomers_Id(1, "USER", customerAssignmentRequest.getCustomerId());
+		CustomerEntity customerEntity = customerRepository.findById(customerAssignmentRequest.getCustomerId()).get();
+		
+		for(Long item :  customerAssignmentRequest.getStaffs()) {
+			int countStaffExist = 0 ;
+			countStaffExist = (int) userEntities.stream().filter(userEntity -> userEntity.getId() == item).count();
+			
+			if(countStaffExist == 0 ) {
+				UserEntity userEntity = userRepository.findById(item).get();
+				customerEntity.getUsers().add(userEntity);
+			}	
+		}
+		
+		for(UserEntity item : userEntities) {
+			int countStaffExist = 0 ;
+			countStaffExist = (int) customerAssignmentRequest.getStaffs().stream().filter(staffId -> staffId == item.getId()).count();
+			
+			if(countStaffExist == 0) {
+				customerEntity.getUsers().remove(item);
+			}
+		}
+		
+		customerRepository.save(customerEntity);
+	}
+
+	
 
 	
 	

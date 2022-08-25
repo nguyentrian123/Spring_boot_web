@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.CustomerDTO;
-import com.laptrinhjavaweb.dto.request.SearchDTO;
 import com.laptrinhjavaweb.entity.CustomerEntity;
 import com.laptrinhjavaweb.repository.custom.CustomerRepositoryCustom;
 import com.laptrinhjavaweb.utils.StringUtils;

@@ -7,8 +7,30 @@ public class CustomerDTO  extends AbstractDTO<CustomerDTO>{
 	private String email ; 
 	private Long staff ;
 	private String fullNameStaff;
-
+	private String companyName;
+	private String need;
+	private String note;
 	
+	
+	
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	public String getNeed() {
+		return need;
+	}
+	public void setNeed(String need) {
+		this.need = need;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 	public String getFullNameStaff() {
 		return fullNameStaff;
 	}

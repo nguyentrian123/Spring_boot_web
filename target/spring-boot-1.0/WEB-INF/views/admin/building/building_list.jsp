@@ -34,7 +34,7 @@
 
 					
 					</div>
-				<form:form  modelAttribute="modelSearch" id="formSubmit" method="get">
+				<form:form  modelAttribute="modelSearch" id="formSubmit" method="post">
 				
 					<div class="page-content">
 						<div class="row">
@@ -226,8 +226,12 @@
 													</div>
 
 													<div class="form-group">
+														
 														<div class="col-sm-1">
-															<button id="searchBuilding" type="submit" class="btn btn-success" data-loading-text="Loading...">Tìm kiếm</button>
+															<button id="searchBuilding" type="submit" class="btn btn-success btn-md dropdown-toggle">
+																	Tìm kiếm
+																<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+															</button>
 														</div>
 													</div>
 														
@@ -254,10 +258,15 @@
 											</button>
 										</a>
 										
-										<button  type ="button" onclick="showAlertBeforeDelete()" class="btn btn-white btn-info btn-bold" data-toggle="tooltip" title="Xóa tòa nhà">
-											<i class="fa fa-trash"  aria-hidden="true"></i>
-											
-										</button>
+										
+										<button id="btnDelete" type="button" disabled
+                                                    class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
+                                                    data-toggle="tooltip"
+                                                    title="Xóa bài viết" onclick="showAlertBeforeDelete()">
+															<span>
+																<i class="fa fa-trash-o bigger-110 pink"></i>
+															</span>
+                                        </button>
 	
 									</div>
 								</div>
@@ -309,13 +318,13 @@
 															</td>
 															<td>${item.name}</td>
 															<td>${item.address}</td>
-															<td>$45</td>
-															<td>$45</td>
-															<td>$45</td>
-															<td>$45</td>
-															<td >3,330</td>
-															<td>Feb 12</td>
-
+															<td>${item.managerName}</td>
+															<td>${item.managerPhone }</td>
+															<td>${item.floorArea }</td>
+															<td>${item.rentArea }</td>
+															<td>${item.rentPrice }</td>
+															<td >${item.serviceFee}</td>
+														
 															<td >
 																<span>Expiring</span>
 															</td>
@@ -338,9 +347,12 @@
 																		</button>  
 																	</a>
 																	
-																	<a class="red" href="#">
-																		<i class="ace-icon fa fa-trash-o bigger-130"></i>
-																	</a>
+																	<button class="btn btn-xs btn-info" data-toggle="tooltip" title="Chi tiết khách hàng">
+																		<i class="normal-icon ace-icon fa fa-eye white bigger-130"></i>
+																	</button>
+																	
+																
+																	
 																</div>
 
 																<div class="hidden-md hidden-lg">
@@ -366,13 +378,7 @@
 																				</a>
 																			</li>
 
-																			<li>
-																				<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																					<span class="red">
-																						<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																					</span>
-																				</a>
-																			</li>
+																			
 																		</ul>
 																	</div>
 																</div>
@@ -381,7 +387,7 @@
 													</c:forEach>
 												</tbody>
 											</table>
-
+											
 										</div>
 									</div>
 								</div>
@@ -422,7 +428,7 @@
 							
 						  </table>
 
-							<input type="hidden" id="buildingId" name="buildingId" value=""/>
+						  <input type="hidden" id="buildingId" name="buildingId" value=""/>
 
 					</div>
 					<div class="modal-footer">
@@ -518,6 +524,7 @@
                       cancelButtonClass: "btn btn-danger"
                   }).then(function (res) {
                       if(res.value){
+                    	 	event.preventDefault();
                     		var ids = $('#buildingList').find(' tbody input[type=checkbox]:checked').map(function () {
           			            return $(this).val();
           			        }).get();
@@ -529,13 +536,13 @@
                   });
               }
       
-            
 
       		
       		function deleteBuilding(data) {
       	        $.ajax({
       	            url: '${buildingAPI}',
       	            type: 'DELETE',
+      	         	dataType: 'json',
       	            contentType: 'application/json',
       	            data: JSON.stringify(data),
       	            success: function (result) {

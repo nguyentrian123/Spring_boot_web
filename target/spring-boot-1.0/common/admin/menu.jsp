@@ -53,10 +53,10 @@
         </li>
     </ul>
     
-       <ul class="nav nav-list">
+    <ul class="nav nav-list">
         <li class="">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fas fa-users"></i>
+                <i class="menu-icon fa fas fa-list"></i>
                 <span class="menu-text">QL tòa nhà</span>
                 <b class="arrow fa fa-angle-down"></b>
             </a>
@@ -66,6 +66,26 @@
                     <a href='<c:url value='/admin/buildinglist'/>'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         DS tòa nhà
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    
+     <ul class="nav nav-list">
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fas fa-user"></i>
+                <span class="menu-text">QL khách hàng</span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="">
+                    <a href='<c:url value='/admin/customerlist'/>'>
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        DS khách hàng
                     </a>
                     <b class="arrow"></b>
                 </li>

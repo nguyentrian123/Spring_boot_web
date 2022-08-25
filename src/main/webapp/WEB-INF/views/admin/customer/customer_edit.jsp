@@ -1,6 +1,8 @@
 <%@include file="/common/taglib.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<c:url var="customerAPI" value="/api/customer" />
+<c:url var="editCustomerURL" value="/admin/customeredit" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +46,9 @@
 							<div class="col-xs-12">
 								
 								
-							
+									<c:if test="${not empty message}">
+											<div class="alert alert-${alert}">${message}</div>
+									</c:if> 
 									
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left " for="form-field-1" > Tên đầy đủ </label>
@@ -72,14 +76,14 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Tên công ty </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="companyName" class="form-control"/>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Nhu cầu </label>
 										<div class="col-sm-9">
-											<input type="text" id="form-field-1" class="form-control" />
+											<form:input path="need" class="form-control"/>
 										</div>
 									</div>
 
@@ -87,17 +91,26 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Ghi chú </label>
 										<div class="col-sm-9">
-											<textarea name="" id="input" class="form-control" rows="3" ></textarea>
-										
+											<form:textarea path="note" class="form-control" rows="3" ></form:textarea>
 										</div>
 									</div>
-
+									
+									<form:hidden path="id" id="customerId" method="POST" />
 									<div class="form-group">
 										<div class="col-md-offset-3 col-md-9">
-											<button class="btn btn-info" type="button">
-												<i class="ace-icon  bigger-110"></i>
-												Cập nhập khách hàng
-											</button>		
+											<c:if test="${empty model.id}">
+												<button class="btn btn-info" type="button" id="btnAddOrUpdateCustomer">
+													<i class="ace-icon  bigger-110"></i>
+													Thêm khách hàng
+												</button>	
+											</c:if>
+											
+											<c:if test="${not empty model.id}">
+												<button class="btn btn-info" type="button" id="btnAddOrUpdateCustomer">
+													<i class="ace-icon  bigger-110"></i>
+													Cập nhập khách hàng
+												</button>	
+											</c:if>		
 										</div>
 									</div>
 
@@ -111,14 +124,21 @@
 						<c:forEach var="item" items="${transactiontypemaps}">
 						
 							<div class="page-header">
-								
+								<c:if test="${not empty param.id }">
 									<h1>${item.value}</h1>
-	
-									<button class="btn btn-white btn-info btn-bold" data-toggle="tooltip" title="Thêm khách hàng">
-									<i class="fa fa-plus-circle"  aria-hidden="true"></i>				
+									<c:url var="addTransactionURL" value="/admin/transaction">
+											<c:param name="customerId" value="${param.id}"/>	
+											<c:param name="type" value="${item.key}"/>														
+									</c:url>
+									<a href="${addTransactionURL}">
+										<button class="btn btn-white btn-info btn-bold" type="button" data-toggle="tooltip" title="Thêm giao dịch">
+										<i class="fa fa-plus-circle"  aria-hidden="true"></i>				
 									</button>
-								
-								
+									</a>
+								</c:if>
+								<c:if test="${empty param.id }">
+									<h1>${item.value}</h1>
+								</c:if>	
 							</div>
 							
 							<div class="row" >
@@ -160,5 +180,62 @@
 					</div><!-- /.page-content -->
 				</div>
 			</div><!-- /.main-content -->
+		
+		<script>
+	
+		$('#btnAddOrUpdateCustomer').click(function(e) {
+			e.preventDefault(); // nhận biết đc ta sẽ submit vào url nào, bắt buộc có
+			var data = {};
+			
+			var formData = $('#formSubmit').serializeArray();
+			$.each(formData, function(i, v) { // duyệt tất cả các ptu trong form và lấy giá trị 
+                 data["" + v.name + ""] = v.value;
+			});
+			var id = $('#customerId').val();
+			
+			if (id == "") {
+				addBuilding(data);
+			} else {
+				updateBuilding(data,id );
+			}
+		});
+
+	
+	
+		function addBuilding(data) {
+			$.ajax({
+				url : '${customerAPI}',
+				type : 'POST',
+				contentType : 'application/json',
+				data : JSON.stringify(data),
+				dataType : 'json',
+				success : function(result) { // result là cái model trả ra nè 
+					window.location.href = "${editCustomerURL}?id="+result.id+"&message=insert_success";
+				},
+				error : function(error) {
+					window.location.href = "${editCustomerURL}?message=error_system";
+				}
+			});
+		}
+	
+		function updateBuilding(data,id) {
+			$.ajax({
+				url : '${customerAPI}',
+				type : 'PUT',
+				contentType : 'application/json',
+				data : JSON.stringify(data),
+				dataType : 'json',
+				success : function(result) { // result là cái model trả ra nè 
+					window.location.href = "${editCustomerURL}?id="+result.id+"&message=update_success";
+				},
+				error : function(error) {
+					window.location.href = "${editCustomerURL}?id="+id+"&message=error_system";
+				}
+			});
+		}
+	</script>
+		
+			
+			
 </body>
 </html>

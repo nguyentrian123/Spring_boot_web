@@ -347,7 +347,7 @@
 			if (id == "") {
 				addBuilding(data);
 			} else {
-				updateBuilding(data);
+				updateBuilding(data,id );
 			}
 		});
 
@@ -364,13 +364,12 @@
 					window.location.href = "${editBuildingURL}?id="+result.id+"&message=insert_success";
 				},
 				error : function(error) {
-					//window.location.href = "${editBuildingURL}?message="+error.responseJSON.detail+" ";
 					window.location.href = "${editBuildingURL}?message=error_system";
 				}
 			});
 		}
 	
-		function updateBuilding(data) {
+		function updateBuilding(data,id) {
 			$.ajax({
 				url : '${buildingAPI}',
 				type : 'PUT',
@@ -381,7 +380,7 @@
 					window.location.href = "${editBuildingURL}?id="+result.id+"&message=update_success";
 				},
 				error : function(error) {
-					window.location.href = "${editBuildingURL}?message=error_system";
+					window.location.href = "${editBuildingURL}?id="+id+"&message=error_system";
 				}
 			});
 		}

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.laptrinhjavaweb.constant.SystemConstant;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.SearchDTO;
 import com.laptrinhjavaweb.service.IBuildingService;
@@ -30,7 +31,7 @@ public class BuildingController {
 	@Autowired
 	private MessageUtils messageUtils;
 	
-	@RequestMapping(value="/admin/buildinglist")
+	@RequestMapping(value="/admin/buildinglist",method = RequestMethod.GET)
 	public ModelAndView buildingList(@ModelAttribute("modelSearch") SearchDTO searchDTO ) {
 		
 		BuildingDTO buildingDTO = new BuildingDTO();
@@ -38,7 +39,7 @@ public class BuildingController {
 		
 		buildingDTO.setListResult(buildingService.findBuilding(searchDTO));
 
-		mav.addObject("model", buildingDTO);
+		mav.addObject(SystemConstant.MODEL, buildingDTO);
 		mav.addObject("staffmaps", userService.getUserMaps());
 		mav.addObject("districtmaps", buildingService.getDistricts());
 		mav.addObject("typemaps",buildingService.getBuildingTypes());
@@ -64,18 +65,17 @@ public class BuildingController {
 		
 		if(request.getParameter("message")!= null)
 		{
-			Map<String, String> message = messageUtils.getMessage(request.getParameter("message"));
-			
+			Map<String, String> message = messageUtils.getMessage(request.getParameter("message"));		
 			// ném lỗi custom ra 
 			/*Map<String, String> message  = new HashMap<>();
 			message.put("alert", "danger");
 			message.put("message", request.getParameter("message"));*/
 			
 			mav.addObject("message", message.get("message"));
-			mav.addObject("alert", message.get("alert"));
+			mav.addObject(SystemConstant.ALERT, message.get("alert"));
 		}
 		
-		mav.addObject("model", model); // ta có các key của  district và type, sau khi chạy xong thì nó sẽ nhận giá trị với key đã có
+		mav.addObject(SystemConstant.MODEL, model); // ta có các key của  district và type, sau khi chạy xong thì nó sẽ nhận giá trị với key đã có
 		mav.addObject("districtmaps", buildingService.getDistricts());
 		mav.addObject("typemaps",buildingService.getBuildingTypes());
 		

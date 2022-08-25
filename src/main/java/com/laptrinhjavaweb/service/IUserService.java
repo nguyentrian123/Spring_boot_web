@@ -22,5 +22,7 @@ public interface IUserService {
     UserDTO updateProfileOfUser(String id, UserDTO userDTO);
     void delete(long[] ids);
     Map<Long,String> getUserMaps();
-    List<StaffResponseDTO> findStaffAssgins(Long id);
+    List<StaffResponseDTO> findStaffAssginsBuilding(Long buildingId);
+    List<StaffResponseDTO> findStaffAssginsCustomer(Long customerId);
+    
 }

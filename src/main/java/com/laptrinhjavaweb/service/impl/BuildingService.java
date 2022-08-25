@@ -88,10 +88,7 @@ public class BuildingService implements IBuildingService{
 	@Transactional
 	public void assignmentBuilding(BuildingAssignmentRequest buildingAssignmentRequest) {
 		List<UserEntity> userEntities = userRepository.findByStatusAndRoles_CodeAndBuildings_Id(1, "USER", buildingAssignmentRequest.getBuildingId());
-		BuildingEntity buildingEntity = buildingRepository.findById(buildingAssignmentRequest.getBuildingId()).get();
-		
-		List<BuildingEntity> buildingEntities = new ArrayList<>();
-		
+		BuildingEntity buildingEntity = buildingRepository.findById(buildingAssignmentRequest.getBuildingId()).get();		
 		
 		// staffs gửi về mà chưa có trong assigmentbuilding thì adđ vào
 		for(Long staffId : buildingAssignmentRequest.getStaffs())
@@ -104,8 +101,6 @@ public class BuildingService implements IBuildingService{
 				// thêm tòa nhà cho nvql
 				UserEntity userEntity = userRepository.findById(staffId).get();
 				buildingEntity.getUsers().add(userEntity);// save manytomany
-				buildingEntities.add(buildingEntity);
-			
 				
 			}	
 			
@@ -114,24 +109,16 @@ public class BuildingService implements IBuildingService{
 		
 		// ds trả ra mà không có trong staffs của buildingAssignmentRequest gửi về thì remove
 		for(UserEntity entity : userEntities)
-		{
-			
-			int countStaffsExist = 0 ;
-
+		{			
+			int countStaffsExist = 0;
 			countStaffsExist = (int) buildingAssignmentRequest.getStaffs().stream().filter(staffId ->  staffId == entity.getId()).count();
 			
 			if (countStaffsExist == 0) {
-
-                UserEntity userEntity = userRepository.findById(entity.getId()).get();
-				buildingEntity.getUsers().remove(userEntity);// delete manytomany
-				buildingEntities.add(buildingEntity);
-				
-
+				buildingEntity.getUsers().remove(entity);// delete manytomany
 			}
 		}
 		
-		buildingRepository.saveAll(buildingEntities);
-		
+		buildingRepository.save(buildingEntity);
 		
 	}
 	

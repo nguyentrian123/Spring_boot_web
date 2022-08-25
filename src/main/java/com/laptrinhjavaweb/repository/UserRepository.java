@@ -16,8 +16,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     long countByStatusNot(int status);
     UserEntity findOneByUserName(String userName);
     List<UserEntity> findByStatusAndRoles_Code(Integer status, String roleCode);
-    List<UserEntity> findByStatusAndRoles_CodeAndBuildings_Id(Integer status, String roleCode,Long id);
-    List<UserEntity> findByCustomers_Id(Long id);
+    List<UserEntity> findByStatusAndRoles_CodeAndBuildings_Id(Integer status, String roleCode,Long buildingId);
+    List<UserEntity> findByStatusAndRoles_CodeAndCustomers_Id(Integer status, String roleCode,Long customerId);
     
     
 }

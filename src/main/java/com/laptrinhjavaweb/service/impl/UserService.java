@@ -11,6 +11,8 @@ import com.laptrinhjavaweb.exception.MyException;
 import com.laptrinhjavaweb.repository.RoleRepository;
 import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.IUserService;
+import com.lowagie.text.pdf.AcroFields.Item;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -170,29 +172,41 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public List<StaffResponseDTO> findStaffAssgins(Long id) {
-		List<UserEntity> staffs = userRepository.findByStatusAndRoles_CodeAndBuildings_Id(1, "USER", id);
+	public List<StaffResponseDTO> findStaffAssginsBuilding(Long buildingId) {
+		List<UserEntity> staffsAssigned = userRepository.findByStatusAndRoles_CodeAndBuildings_Id(1, "USER", buildingId);
 		List<UserEntity> staffEntitys = userRepository.findByStatusAndRoles_Code(1, "USER");
 		List<StaffResponseDTO> staffResponseDTOs = new ArrayList<>();
 		
-		for(UserEntity item : staffs)
-		{	
-			
-			staffResponseDTOs.add(userConverter.convertToResponseChecked(item));
-		}
+		staffResponseDTOs = staffsAssigned.stream().map(staff -> userConverter.convertToResponseChecked(staff)).collect(Collectors.toList());
 		
-		for(UserEntity uEntity : staffEntitys)
+		for(UserEntity userEntity : staffEntitys)
 		{
 			int count = 0;
-			for(StaffResponseDTO item : staffResponseDTOs)
-			{
-				if(uEntity.getId() == item.getId())
-				{
-					count ++ ;
-				}
-			}
+			count = (int) staffResponseDTOs.stream().filter(item -> userEntity.getId() == item.getId()).count();
+			
 			if(count == 0) {
-				staffResponseDTOs.add(userConverter.convertToResponseNotChecked(uEntity));
+				staffResponseDTOs.add(userConverter.convertToResponseNotChecked(userEntity));
+			}
+		}
+		
+		return staffResponseDTOs;
+	}
+
+	@Override
+	public List<StaffResponseDTO> findStaffAssginsCustomer(Long customerId) {
+		List<UserEntity> staffsAssigned = userRepository.findByStatusAndRoles_CodeAndCustomers_Id(1, "USER", customerId);
+		List<UserEntity> staffEntitys = userRepository.findByStatusAndRoles_Code(1, "USER");
+		List<StaffResponseDTO> staffResponseDTOs = new ArrayList<>();
+		
+		staffResponseDTOs = staffsAssigned.stream().map(staff -> userConverter.convertToResponseChecked(staff)).collect(Collectors.toList());
+		
+		for(UserEntity userEntity : staffEntitys)
+		{
+			int count = 0;
+			count = (int) staffResponseDTOs.stream().filter(item -> userEntity.getId() == item.getId()).count();
+			
+			if(count == 0) {
+				staffResponseDTOs.add(userConverter.convertToResponseNotChecked(userEntity));
 			}
 		}
 		
