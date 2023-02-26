@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.api.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -63,4 +64,15 @@ public class CustomerAPI {
 		result.setMessage("success");
 		return result;
 	}
+	
+	@DeleteMapping
+	public ResponseEntity<Void>  delete(@RequestBody Long[] ids){
+		if(ids.length > 0) {
+			customerService.deleteCustomer(ids);
+		}
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	
 }

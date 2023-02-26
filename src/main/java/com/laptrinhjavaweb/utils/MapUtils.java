@@ -3,6 +3,7 @@ package com.laptrinhjavaweb.utils;
 import java.util.Map;
 
 public class MapUtils {
+	
 
 	public static <T>  T getObject(Map<String, String> params, String key, Class<T> tClass)
 	{
@@ -24,8 +25,8 @@ public class MapUtils {
 			}
 			return tClass.cast(object);
 		}
+		 
 		
-	
 		return null;
 	}
 }

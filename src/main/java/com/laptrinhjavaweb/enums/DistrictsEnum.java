@@ -12,7 +12,9 @@ public enum DistrictsEnum {
         this.districtValue = districtValue;
     }
 
-	public String getDistrictValue() {
+	public String getDistrictValue() { // bieesn final nên chỉ có getter
 		return districtValue;
 	}
+
+    
 }

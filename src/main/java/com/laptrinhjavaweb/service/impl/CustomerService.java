@@ -29,8 +29,6 @@ public class CustomerService implements ICustomerService{
 	@Autowired
 	CustomerRepository customerRepository;
 	@Autowired
-	CustomerRepositoryCustom customerRepositoryCustom;
-	@Autowired
 	TransactionRepository transactionRepository;
 	@Autowired
 	TransactionConverter transactionConverter;
@@ -50,7 +48,7 @@ public class CustomerService implements ICustomerService{
 
 	@Override
 	public List<CustomerDTO> searchCustomer(CustomerDTO customerDTO) {
-		List<CustomerEntity> entities = customerRepositoryCustom.searchCustomer(customerDTO);
+		List<CustomerEntity> entities = customerRepository.searchCustomer(customerDTO);
 		List<CustomerDTO> rerults = new ArrayList<>();
 		
 		
@@ -122,6 +120,15 @@ public class CustomerService implements ICustomerService{
 		}
 		
 		customerRepository.save(customerEntity);
+	}
+
+	@Override
+	public void deleteCustomer(Long[] ids) {
+		for(Long id : ids) {
+			customerRepository.deleteById(id);
+		}
+		
+		
 	}
 
 	

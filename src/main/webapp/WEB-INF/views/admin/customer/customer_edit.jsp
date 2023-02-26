@@ -125,17 +125,21 @@
 						
 							<div class="page-header">
 								<c:if test="${not empty param.id }">
-									<h1>${item.value}</h1>
+								<h1>${item.value}</h1>
 									<c:url var="addTransactionURL" value="/admin/transaction">
 											<c:param name="customerId" value="${param.id}"/>	
-											<c:param name="type" value="${item.key}"/>														
+											<c:param name="type" value="${item.key}"/>	
+											<c:param name="typeName" value="${item.value}"/>														
 									</c:url>
 									<a href="${addTransactionURL}">
 										<button class="btn btn-white btn-info btn-bold" type="button" data-toggle="tooltip" title="Thêm giao dịch">
 										<i class="fa fa-plus-circle"  aria-hidden="true"></i>				
 									</button>
 									</a>
+									
+									
 								</c:if>
+								
 								<c:if test="${empty param.id }">
 									<h1>${item.value}</h1>
 								</c:if>	
@@ -181,7 +185,11 @@
 				</div>
 			</div><!-- /.main-content -->
 		
+		
+		
 		<script>
+		
+	
 	
 		$('#btnAddOrUpdateCustomer').click(function(e) {
 			e.preventDefault(); // nhận biết đc ta sẽ submit vào url nào, bắt buộc có

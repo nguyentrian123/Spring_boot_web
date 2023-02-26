@@ -14,5 +14,5 @@ public interface ICustomerService {
 	CustomerDTO findById(Long id);
 	void assignmentCustomer(CustomerAssignmentRequest customerAssignmentRequest);
 	CustomerDTO save(CustomerDTO customerDTO);
-	
+	void deleteCustomer(Long [] ids);
 }

@@ -132,7 +132,7 @@
 									<div class="col-xs-12">
 
 										<div>
-											<table id="simple-table" class="table table-striped table-bordered table-hover">
+											<table id="customerList" class="table table-striped table-bordered table-hover">
 												<thead>
 													<tr>
 														<th class="center">
@@ -161,7 +161,7 @@
 													<tr>
 														<td class="center">
 															<label class="pos-rel">
-																<input type="checkbox" class="ace" />
+																<input type="checkbox" class="ace" value="${item.id}" id="checkbox_${item.id}" />
 																<span class="lbl"></span>
 															</label>
 														</td>
@@ -250,7 +250,7 @@
 			</div><!-- /.main-content -->
 
 		
-	<div id="assignmentCustomerModal" class="modal fade" role="dialog">
+		<div id="assignmentCustomerModal" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 		  
 			  <!-- Modal content-->
@@ -348,6 +348,49 @@
                       }
                   });
               }
+			  
+			  
+			  function showAlertBeforeDelete(callback) {
+                  swal({
+                      title: "Xác nhận xóa",
+                      text: "Bạn có chắc chắn xóa những dòng đã chọn",
+                      type: "warning",
+                      showCancelButton: true,
+                      confirmButtonText: "Xác nhận",
+                      cancelButtonText: "Hủy bỏ",
+                      confirmButtonClass: "btn btn-success",
+                      cancelButtonClass: "btn btn-danger"
+                  }).then(function (res) {
+                      if(res.value){
+                    	 	event.preventDefault();
+                    		var ids = $('#customerList').find(' tbody input[type=checkbox]:checked').map(function () {
+          			            return $(this).val();
+          			        }).get();
+                    		deleteCustomer(ids);
+          					
+                      }else if(res.dismiss == 'cancel'){
+                          console.log('cancel');
+                      }
+                  });
+              }
+      
+
+      		
+      		function deleteCustomer(data) {
+      	        $.ajax({
+      	            url: '${customerAPI}',
+      	            type: 'DELETE',
+      	         	dataType: 'json',
+      	            contentType: 'application/json',
+      	            data: JSON.stringify(data),
+      	            success: function (result) {
+      	                window.location.href = "${customerList}?message=delete_success";
+      	            },
+      	            error: function (error) {
+      	            	window.location.href = "${customerList}?message=error_system";
+      	            }
+      	        });
+      	    }
 			  
 		  </script>
 		  

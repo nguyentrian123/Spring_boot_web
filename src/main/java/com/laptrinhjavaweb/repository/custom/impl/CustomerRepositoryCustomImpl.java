@@ -15,7 +15,7 @@ import com.laptrinhjavaweb.repository.custom.CustomerRepositoryCustom;
 import com.laptrinhjavaweb.utils.StringUtils;
 
 @Repository
-public class CustomerRepositoryCustomIMPL implements CustomerRepositoryCustom{
+public class CustomerRepositoryCustomImpl implements CustomerRepositoryCustom{
 
 	@PersistenceContext
 	private EntityManager entityManager;

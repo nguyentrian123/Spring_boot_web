@@ -38,7 +38,7 @@
 
 						<div class="page-header">
 							<h1>
-								Thông tin giao dịch
+								${param.typeName }
 								
 							</h1>
 						</div><!-- /.page-header -->
@@ -58,7 +58,8 @@
 										</div>
 									</div>
 									
-									<div class="form-group">
+									<input type="hidden" id="type" name="type" value="${param.type}"/>
+									<%-- <div class="form-group">
 										<label class="col-sm-3 control-label no-padding-left" for="form-field-1" > Loại giao dịch </label>
 										<div class="col-sm-2" >	
 											
@@ -68,7 +69,7 @@
 											</form:select>
 										
 										</div>
-									</div>
+									</div> --%>
 
 			
 									<form:hidden path="customerId" id="customerId" method="POST" />

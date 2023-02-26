@@ -84,6 +84,19 @@ public class BuildingController {
 	}
 	
 	
+	@RequestMapping(value = "/admin/buildingdetail", method = RequestMethod.GET)
+	public ModelAndView buildingDetail(@RequestParam(value = "id") Long id, 
+										HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("admin/building/building_detail");
+		BuildingDTO model = new BuildingDTO();
+		model = buildingService.findById(id);
+		mav.addObject(SystemConstant.MODEL, model); 
+		mav.addObject("districtmaps", buildingService.getDistricts());
+		mav.addObject("typemaps",buildingService.getBuildingTypes());
+		return mav;
+		
+	}
+	
 	
 	
 	

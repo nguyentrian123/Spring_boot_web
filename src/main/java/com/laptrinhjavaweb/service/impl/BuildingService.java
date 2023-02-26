@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.dto.request.BuildingAssignmentRequest;
@@ -32,9 +33,6 @@ public class BuildingService implements IBuildingService{
 	
 	@Autowired
 	private BuildingRepository buildingRepository;
-	
-	@Autowired
-	private BuildingRepositoryCustom buildingRepositoryCustom;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -69,17 +67,13 @@ public class BuildingService implements IBuildingService{
 			BuildingEntity oldBuilding = buildingRepository.findById(buildingDTO.getId()).get();
 			buildingEntity = buildingConverter.convertToEntity(oldBuilding, buildingDTO);
 			buildingEntity.setUsers(oldBuilding.getUsers()); // gửi lại các nv đang quản lý tòa nhà đó
-
 		}
 		else
 		{
 			buildingEntity = buildingConverter.convertToEntity(buildingDTO);
-			
 		}
 		
 		return buildingConverter.convertToDTO(buildingRepository.save(buildingEntity));
-		
-		
 	}
 	
 	
@@ -104,8 +98,7 @@ public class BuildingService implements IBuildingService{
 				
 			}	
 			
-		}
-		
+		}	
 		
 		// ds trả ra mà không có trong staffs của buildingAssignmentRequest gửi về thì remove
 		for(UserEntity entity : userEntities)
@@ -117,38 +110,55 @@ public class BuildingService implements IBuildingService{
 				buildingEntity.getUsers().remove(entity);// delete manytomany
 			}
 		}
-		
-		buildingRepository.save(buildingEntity);
-		
+
+		buildingRepository.save(buildingEntity);	
 	}
 	
 	
 	@Override
 	public List<BuildingDTO> findBuilding(SearchDTO searchDTO ) {
 		List<BuildingDTO> buildingDTOs = new ArrayList<>();
-		List<BuildingEntity> entities = buildingRepositoryCustom.searchBuilding(searchDTO);
-		
+		BuildingSearchBuilder builder = convertBuildingSearchBuilder(searchDTO);
+		List<BuildingEntity> entities = buildingRepository.searchBuilding(builder);
 		Map<String,String> districtMap = getDistricts();
 		
 		for(BuildingEntity  item : entities)
 		{
-
 			BuildingDTO buildingDTO = buildingConverter.convertToDTO(item);
 			buildingDTO.setAddress(districtMap.entrySet().stream().filter(entry -> item.getDistrictCode().equals(entry.getKey()))
 																  .map(entry -> item.getStreet() +","+ item.getWard() +","+  entry.getValue())
-																  .collect(Collectors.joining())); // đưa về String, biết chỉ có 1 districtCode nhưng vì lặp 
+																  .collect(Collectors.joining())); // đưa về String, biết là chỉ có 1 districtCode nhưng vì lặp 
 																								// nên cần phải collect.
 			buildingDTOs.add(buildingDTO);
 		}
-		
 		return buildingDTOs;
 	}
 
 	
+	private BuildingSearchBuilder convertBuildingSearchBuilder(SearchDTO searchDTO) {
+		BuildingSearchBuilder builder = new BuildingSearchBuilder.Builder()
+											.setName(searchDTO.getName())
+											.setStreet(searchDTO.getStreet())
+											.setWard(searchDTO.getWard())
+											.setDistrict(searchDTO.getDistrict())
+											.setFloorArea(searchDTO.getFloorArea())
+											.setNumberOfBasement(searchDTO.getNumberOfBasement())
+											.setDirection(searchDTO.getDirection())
+											.setLevel(searchDTO.getLevel())
+											.setRentPriceFrom(searchDTO.getRentPriceFrom())
+											.setRentPriceTo(searchDTO.getRentPriceTo())
+											.setRentAreaFrom(searchDTO.getRentAreaFrom())
+											.setRentAreaTo(searchDTO.getRentAreaTo())
+											.setStaff(searchDTO.getStaff())
+											.setRenttype(searchDTO.getRenttype())
+											.build();
+		
+		return builder;
+	}
 	
+
 	@Override
 	public int getTotalItem(SearchDTO searchDTO) {
-		
 		return (int ) buildingRepository.count();
 	}
 	
@@ -156,20 +166,17 @@ public class BuildingService implements IBuildingService{
 
 	@Override
 	public BuildingDTO findById(Long id) {
-
 		BuildingEntity buildingEntity = buildingRepository.findById(id).get();
 		BuildingDTO buildingDTO = buildingConverter.convertToDTO(buildingEntity);
-		
 		return buildingDTO;
 	}
 	
 
 	@Override
+	@Transactional
 	public void deleteBuilding(Long[] ids) {	
-		
 		for (Long i : ids) {
 			buildingRepository.deleteById(i);
-			
 		}
 	}
 

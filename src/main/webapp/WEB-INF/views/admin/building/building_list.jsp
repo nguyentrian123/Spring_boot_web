@@ -347,10 +347,14 @@
 																		</button>  
 																	</a>
 																	
-																	<button class="btn btn-xs btn-info" data-toggle="tooltip" title="Chi tiết khách hàng">
-																		<i class="normal-icon ace-icon fa fa-eye white bigger-130"></i>
-																	</button>
-																	
+																	<c:url var="detailBuildingURL" value="/admin/buildingdetail">
+																	<c:param name="id" value="${item.id}"/>															
+																	</c:url>
+																	<a href='${detailBuildingURL}'>
+																		<button class="btn btn-xs btn-info" data-toggle="tooltip" type="button" title="Chi tiết khách hàng">
+																			<i class="normal-icon ace-icon fa fa-eye white bigger-130"></i>
+																		</button>
+																	</a>
 																
 																	
 																</div>

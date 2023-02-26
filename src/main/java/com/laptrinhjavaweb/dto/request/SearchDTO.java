@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SearchDTO {
 	
-	private String name ; 
+	public String name ; 
 	private String street;
 	private String ward ; 
 	private String district;
